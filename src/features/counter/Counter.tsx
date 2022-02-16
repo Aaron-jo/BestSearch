@@ -10,9 +10,10 @@ import {
   selectCount,
 } from './counterSlice';
 import styles from './Counter.module.css';
+import { useSelector } from 'react-redux';
 
 export function Counter() {
-  const count = useAppSelector(selectCount);
+  const count = useSelector(selectCount);
   const dispatch = useAppDispatch();
   const [incrementAmount, setIncrementAmount] = useState('2');
 

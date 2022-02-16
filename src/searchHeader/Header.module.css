@@ -1,0 +1,11 @@
+.header {
+  height: 80px;
+  border-bottom: solid 1px gainsboro;
+  display: flex;
+  align-items: center;
+}
+
+/* 搜索框组件样式 */
+.searchInputWrapper {
+  
+}
