@@ -1,10 +1,11 @@
+export type IProductTrends = {
+  name: string;
+  search_msv: {date: string; sv: number}[];
+  [key: string]: unknown;
+}
 export interface ISearcResultDataType {
   data: {
-    product_trends: Array<{
-      name: string;
-      search_msv: {date: string; sv: number}[];
-      [key: string]: unknown;
-    }>;
+    product_trends: Array<IProductTrends>;
   };
   msg: string;
   status: "OK" | "FAILED";

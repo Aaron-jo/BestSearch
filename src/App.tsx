@@ -10,7 +10,7 @@ function App() {
     <Box className="App" sx={{ display: "flex", flexDirection: "column" }}>
       <Header />
 
-      <Container sx={{ flex: 1, width: "100%" }}>
+      <Container sx={{ flex: 1, width: "100%", overflow: 'auto', height: 0, mb: 2 }}>
         <Routes>
           <Route path="/" element={<HomeContainer />} />
           <Route path="/search/:keywords" element={<SearchResult />} />

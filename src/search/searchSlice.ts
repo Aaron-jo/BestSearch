@@ -38,15 +38,15 @@ export const fetchSearchAsync = createAsyncThunk(
       login_token: "INTERVIEW_SIMPLY2021",
       search_phrase,
     };
-    // const response = await fetch(
-    //   "http://3.141.23.218:5000/interview/keyword_search",
-    //   {
-    //     method: 'POST',
-    //     body: JSON.stringify(params),
-    //   }
-    // );
-    // const json = await response.json();
-    const json = await searchResultMockAPI();
+    const response = await fetch(
+      "http://3.141.23.218:5000/interview/keyword_search",
+      {
+        method: 'POST',
+        body: JSON.stringify(params),
+      }
+    );
+    const json = await response.json();
+    // const json = await searchResultMockAPI();
     if (json.status == 'OK') {
       // 这里返回的值将会给到action payload, 并且状态变为fulfilled
       return json;
