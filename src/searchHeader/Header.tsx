@@ -1,7 +1,10 @@
-import React, { useCallback } from "react";
-import { Button, OutlinedInput } from "@mui/material";
+import React, { useCallback, useEffect } from "react";
+import { Button, OutlinedInput, Typography, Box, SxProps } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import cs from "./Header.module.css";
+import AcUnitIcon from "@mui/icons-material/AcUnit";
+import { useParams, useNavigate, Route, Routes } from "react-router-dom";
+import {fetchSearchAsync, setSearchValue} from '../search/searchSlice';
+import {useAppDispatch, useAppSelector} from '../app/hooks'
 
 /**
  * 搜索 Header
@@ -9,29 +12,107 @@ import cs from "./Header.module.css";
  */
 function SearchHeader() {
   return (
-    <div className={cs.header}>
-      <div className={cs.logo}>logo</div>
-      <SearchInput />
-    </div>
+    <Box
+      sx={{
+        height: 72,
+        borderBottom: "solid 1px gainsboro",
+        display: "flex",
+        alignItems: "center",
+        p: "0 16px",
+      }}
+    >
+      <Typography
+        component="div"
+        variant="h6"
+        sx={{
+          mr: 1,
+          display: { xs: "none", md: "block" },
+        }}
+      >
+        <span style={{ fontWeight: "bold" }}>Best</span>Search
+      </Typography>
+      <Typography variant="h6" sx={{ display: { xs: "block", md: "none" } }}>
+        <AcUnitIcon />
+      </Typography>
+      <Routes>
+        <Route path="/search/:keywords" element={<SearchInput />} />
+      </Routes>
+    </Box>
   );
 }
 
 /**
  * 搜索框组件
  */
-export function SearchInput() {
-  const handleKeyUp = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      console.log(e.currentTarget.value)
+interface ISearchInputProps {
+  sx?: SxProps;
+  [key: string]: unknown;
+}
+export function SearchInput({ sx, ...restProps }: ISearchInputProps) {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const selectorValue = useAppSelector((state) => state.search.value);
+  const {keywords} = useParams();
+
+  useEffect(() => {
+    if (keywords) {
+      const value = keywords.replaceAll('+', ' ');
+      dispatch(setSearchValue(value));
+      dispatch(fetchSearchAsync(value));
     }
   }, [])
+
+  const handleSearch = useCallback((value: string) => {
+    let searchValue = value.replace(/\s+/g, "+");
+    if (searchValue) {
+      dispatch(setSearchValue(value));
+      dispatch(fetchSearchAsync(value));
+      navigate(`/search/${searchValue}`);
+    }
+  }, []);
+
   return (
-    <div className={cs.searchInputWrapper}>
-      <OutlinedInput onKeyUp={handleKeyUp} placeholder="请输入" size="small" className={cs.input} />
-      <Button variant="outlined" color="inherit">
+    <Box
+      sx={{
+        ...sx,
+        marginLeft: 1,
+        width: "80%",
+        display: "flex",
+        alignItems: "center",
+        color: "rgb(133, 133, 133)",
+      }}
+    >
+      <OutlinedInput
+        onKeyUp={(e) => {
+          const value = e.currentTarget.value;
+          if (e.key.toLocaleLowerCase() == 'enter') {
+            handleSearch(value);
+          }
+        }}
+        value={selectorValue}
+        onChange={(e) => {
+          dispatch(setSearchValue(e.target.value))
+        }}
+        placeholder="Search for new products in 961K stores"
+        size="small"
+        sx={{
+          width: "100%",
+        }}
+      />
+      <Button
+        sx={{
+          ml: 1,
+        }}
+        variant="outlined"
+        color="inherit"
+        onClick={() => {
+          const value = '';
+          handleSearch(value);
+        }}
+      >
         <SearchIcon color="inherit" />
       </Button>
-    </div>
+    </Box>
   );
 }
 
