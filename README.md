@@ -1,44 +1,31 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+该项目使用[Create React App](https://github.com/facebook/create-react-app)生成. 基本按要求完成
 
-## Available Scripts
+从git clone之后, 首先需要安装相关依赖, 安装完成后使用`yarn start`命令启动项目
+## 项目使用技术
+- [Redux](https://redux.js.org/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [Material UI](https://material-ui.com/)
+- [typescript](https://www.typescriptlang.org/)
+- [React Router](https://reactrouter.com/web/guides/quick-start)
 
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 项目结构
+主要看src
+```
+src
+├─App.tsx                 // 首页
+├─index.css
+├─index.tsx
+├─react-app-env.d.ts
+├─serviceWorker.ts
+├─setupTests.ts
+├─searchHeader
+|      └Header.tsx        // 搜索头部组件, 内部拆分了搜索框组件
+├─search                  
+|   ├─SearchResult.tsx    // 搜索结果展示组件
+|   ├─mockData.ts         // mock 数据
+|   ├─searchMockAPI.ts    // mock API
+|   └searchSlice.ts       // search result的reducer, 里面包含了state、actions、thunk的数据获取
+├─app                     // store的生成
+|  ├─hooks.ts             // 根据项目定义自己的hooks
+|  └store.ts              // 装配reducer的地方, 返回一个store
+```
