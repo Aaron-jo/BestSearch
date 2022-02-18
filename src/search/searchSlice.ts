@@ -5,7 +5,7 @@ import {
   AsyncThunk,
   AnyAction,
 } from "@reduxjs/toolkit";
-import { searchResultMockAPI } from "./searchAPI";
+import { searchResultMockAPI } from "./searchMockAPI";
 import { ISearcResultDataType } from "./mockData";
 
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;

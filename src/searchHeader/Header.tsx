@@ -11,6 +11,8 @@ import {useAppDispatch, useAppSelector} from '../app/hooks'
  * @returns JSX
  */
 function SearchHeader() {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   return (
     <Box
       sx={{
@@ -27,11 +29,16 @@ function SearchHeader() {
         sx={{
           mr: 1,
           display: { xs: "none", md: "block" },
+          cursor: 'pointer'
+        }}
+        onClick={() => {
+          dispatch(setSearchValue(''));
+          navigate('/');
         }}
       >
         <span style={{ fontWeight: "bold" }}>Best</span>Search
       </Typography>
-      <Typography variant="h6" sx={{ display: { xs: "block", md: "none" } }}>
+      <Typography variant="h6" sx={{ display: { xs: "flex", md: "none", alignItems: "center" } }}>
         <AcUnitIcon />
       </Typography>
       <Routes>
@@ -62,7 +69,8 @@ export function SearchInput({ sx, ...restProps }: ISearchInputProps) {
     }
   }, [])
 
-  const handleSearch = useCallback((value: string) => {
+  const handleSearch = useCallback((value?: string) => {
+    if (!value) return
     let searchValue = value.replace(/\s+/g, "+");
     if (searchValue) {
       dispatch(setSearchValue(value));
@@ -106,8 +114,7 @@ export function SearchInput({ sx, ...restProps }: ISearchInputProps) {
         variant="outlined"
         color="inherit"
         onClick={() => {
-          const value = '';
-          handleSearch(value);
+          handleSearch(selectorValue);
         }}
       >
         <SearchIcon color="inherit" />
